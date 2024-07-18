@@ -6,9 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.MessageSource;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -26,6 +24,22 @@ public class BaseUtil {
                     }
                 }
         ));
+    }
+
+    public static Map<String, List<String>> convertBreedsToList(Map<String, List<String>> breeds) {
+        Map<String, List<String>> breedList = new HashMap<>();
+        for (Map.Entry<String, List<String>> entry : breeds.entrySet()) {
+            String breed = entry.getKey();
+            List<String> subBreeds = entry.getValue();
+            if (subBreeds.isEmpty() || Objects.equals(breed, "sheepdog") || Objects.equals(breed, "terrier")) {
+                for (String subBreed : subBreeds) {
+                    breedList.put(breed + (subBreed.isEmpty() ? "" : "-" + subBreed), List.of());
+                }
+            } else {
+                breedList.put(breed, subBreeds);
+            }
+        }
+        return breedList;
     }
 
     public static List<Map<String, Object>> convertJsonToMap(String jsonString) throws BadArgumentsException {

@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("com.example.alfa.service")
+@ComponentScan("com.example.alfa.project")
 public class JdbcConfiguration {
 
     @Bean
